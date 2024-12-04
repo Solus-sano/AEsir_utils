@@ -21,27 +21,27 @@ def print_json_structure(data, indent='', level=0):
     """
     if isinstance(data, dict):
         for key, value in data.items():
-            print(f"{indent}|-- {key}:")
+            print(f"{indent}|-- \033[31m{key}\033[0m:")
             print_json_structure(value, indent + "    ", level + 1)
     
     # 处理列表
     elif isinstance(data, list):
-        print(f"{indent}|-- List of length {len(data)}")
+        print(f"{indent}\033[33mList of length {len(data)}\033[0m")
         if len(data) > 0:
-            print(f"{indent}    |-- Example element:")
-            print_json_structure(data[0], indent + "    ", level + 1)
+            print(f"\033[33m{indent}(Example element):\033[0m")
+            print_json_structure(data[-1], indent, level + 1)
     
     # 处理 NumPy 数组
     elif isinstance(data, np.ndarray):
-        print(f"{indent}|-- np.ndarray with shape {data.shape}")
+        print(f"{indent}\033[32mnp.ndarray with shape\033[0m {data.shape}")
     
     # 处理 PyTorch 张量
     elif isinstance(data, torch.Tensor):
-        print(f"{indent}|-- torch.Tensor with shape {data.shape}")
+        print(f"{indent}\033[32mtorch.Tensor with shape\033[0m {data.shape}")
     
     # 处理其他类型
     else:
-        print(f"{indent}|-- {type(data).__name__}: {data}")
+        print(f"\033[32m{indent}({type(data).__name__})\033[0m{data}")
 
 
 def get_ckpt_structure(file = '/data2/liangzhijia/ckpt/sdxl/Kohaku-XL_beta/sdxl_vae.safetensors'):
