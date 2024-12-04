@@ -6,7 +6,7 @@ setup(
     author="Solus-sano",   
     author_email="liangzhj56@mail2.sysu.edu.cn",  
     description="A brief description of your project",
-    long_description=open("README.md").read(),
+    long_description="useful tools",
     long_description_content_type="text/markdown",
     url="https://github.com/Solus-sano/AEsir_utils",  
     packages=find_packages(),  
