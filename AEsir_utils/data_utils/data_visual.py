@@ -44,7 +44,7 @@ def print_json_structure(data, indent='', level=0):
         print(f"\033[32m{indent}({type(data).__name__})\033[0m{data}")
 
 
-def get_ckpt_structure(file = '/data2/liangzhijia/ckpt/sdxl/Kohaku-XL_beta/sdxl_vae.safetensors'):
+def get_ckpt_structure(data):
     """
     Loads a checkpoint file and returns a string representation of its structure. 
 
@@ -56,11 +56,17 @@ def get_ckpt_structure(file = '/data2/liangzhijia/ckpt/sdxl/Kohaku-XL_beta/sdxl_
         str: A string containing the keys, shapes, and data types of the tensors
              in the checkpoint.
     """
-    if file.endswith('.safetensors'):
-        from safetensors.torch import load_file
-        ckpt = load_file(file)
+    if isinstance(data, str):
+        if data.endswith('.safetensors'):
+            from safetensors.torch import load_file
+            ckpt = load_file(data)
+        else:
+            ckpt = torch.load(data)
+    elif isinstance(data, dict):
+        ckpt = data
     else:
-        ckpt = torch.load(file)
+        raise ValueError(f"Unsupported data type: {type(data)}")        
+        
     # if save_path is None:
     #     for k,v in ckpt.items():
     #         print(k,":   ",v.shape, "   ",v.dtype)
@@ -70,5 +76,8 @@ def get_ckpt_structure(file = '/data2/liangzhijia/ckpt/sdxl/Kohaku-XL_beta/sdxl_
     #             f.write(k + ": " + str(v.shape) + "   " + str(v.dtype) + '\n')
     op_txt = ""
     for k,v in ckpt.items():
-        op_txt += k + ": " + str(v.shape) + "   " + str(v.dtype) + '\n'
+        op_txt += f"\033[33m{k}\033[0m" + ": " + str(v.shape) + "   " + str(v.dtype) + '\n'
     return op_txt
+
+def print_nnmodel_state_dict(model):
+    print_json_structure(model.state_dict())
