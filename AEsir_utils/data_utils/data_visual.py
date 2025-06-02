@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 from typing import Union, List, Tuple
+import json
 # from safetensors.torch import load_file
 
 
@@ -15,10 +16,14 @@ def print_json_structure(data, indent='', level=0):
 
     Args:
         data: The data object to be analyzed. Can be a dictionary, list, numpy array,
-              torch tensor, or other data type.
+              torch tensor, string(json file), or other data type.
         indent (str): The indentation string used for formatting the output.
         level (int): The current level of recursion, used for formatting the output.
     """
+    if isinstance(data, str):
+        assert data.endswith('.json'), "Only support json file"
+        data = json.load(open(data))
+    
     if isinstance(data, dict):
         for key, value in data.items():
             print(f"{indent}|-- \033[31m{key}\033[0m:")
