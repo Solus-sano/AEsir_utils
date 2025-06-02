@@ -2,11 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
     name="AEsir_utils",  
-    version="0.1.0",      
+    version="0.2.0",      
     author="Solus-sano",   
     author_email="liangzhj56@mail2.sysu.edu.cn",  
-    description="A brief description of your project",
-    long_description="useful tools",
+    description="some useful tools, for data visualization, detection tools, diffusion tools, llm prompts generation, etc.",
     long_description_content_type="text/markdown",
     url="https://github.com/Solus-sano/AEsir_utils",  
     packages=find_packages(),  
@@ -19,9 +18,4 @@ setup(
     install_requires=[  
                            
     ],
-    # entry_points={
-    #     "console_scripts": [
-    #         "script1=your_project.script1:main",  
-    #     ],
-    # },
 )
