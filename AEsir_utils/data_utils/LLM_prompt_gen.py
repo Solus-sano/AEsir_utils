@@ -14,6 +14,24 @@ FILE_PROMPT = """
 ===================================================================================================================
 """
 
+DEFAULT_KNOWN_TEXT_EXTENSIONS = {
+    # Code & Scripts
+    ".py", ".ipynb", ".js", ".ts", ".jsx", ".tsx", ".html", ".htm", ".xhtml", ".css",
+    ".scss", ".less", ".java", ".c", ".cpp", ".h", ".hpp", ".cs", ".go", ".rs",
+    ".swift", ".kt", ".php", ".rb", ".pl", ".sh", ".bash", ".zsh", ".bat", ".ps1",
+    ".lua", ".gd", ".dart", "dockerfile", ".tf", ".tfvars", ".hcl",
+    # Config & Data
+    ".json", ".yaml", ".yml", ".xml", ".toml", ".ini", ".cfg", ".conf", ".env",
+    ".csv", ".tsv", ".sql", ".graphql", ".gql", "pipfile", "gemfile", "makefile",
+    "requirements.txt", "pyproject.toml", "poetry.lock", "package.json", "yarn.lock",
+    "composer.json", "go.mod", "go.sum",
+    # Markup & Text
+    ".txt", ".md", ".rst", ".tex", ".rtf", ".text", ".ascii", ".log", ".err", ".out",
+    ".gitignore", ".gitattributes", ".editorconfig", ".project", ".properties",
+    # Files with no extension (common for config or scripts)
+    "", # For files like 'Makefile', 'Dockerfile', 'LICENSE', 'README' (will be checked by name too)
+}
+
 def generate_proj_prompt(
     proj_dir: str
 ) -> str:
@@ -127,6 +145,9 @@ def generate_proj_prompt_2(
 
             # 4. Check against excluded files
             if item.name in exclude_files:
+                continue
+            # check DEFAULT_KNOWN_TEXT_EXTENSIONS
+            if item.suffix.lower() not in DEFAULT_KNOWN_TEXT_EXTENSIONS:
                 continue
 
             # 5. Check file extensions
